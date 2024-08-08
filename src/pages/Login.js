@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import loginIcons from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+
+  console.log("data login", data);
+
   return (
     <section id="login">
       <div className="mx-auto container p-4">
@@ -13,13 +36,16 @@ const Login = () => {
             <img src={loginIcons} alt="login icons" />
           </div>
 
-          <form className="pt-6 flex flex-col gap-2" onSubmit="">
+          <form className="pt-6 flex flex-col gap-2" onSubmit={handleSubmit}>
             <div className="grid">
               <label>Email : </label>
               <div className="bg-slate-100 p-2">
                 <input
                   type="email"
                   placeholder="enter email"
+                  name="email"
+                  value={data.email}
+                  onChange={handleOnChange}
                   className="w-full h-full outline-none bg-transparent"
                 />
               </div>
@@ -29,15 +55,18 @@ const Login = () => {
               <label>Password : </label>
               <div className="bg-slate-100 p-2 flex">
                 <input
-                  type="text"
+                  type={showPassword ? "text" : "password"}
                   placeholder="enter password"
+                  value={data.password}
+                  name="password"
+                  onChange={handleOnChange}
                   className="w-full h-full outline-none bg-transparent"
                 />
                 <div
                   className="cursor-pointer text-xl"
-                  onClick=""
+                  onClick={() => setShowPassword((preve) => !preve)}
                 >
-                  <span>{true ? <FaEyeSlash /> : <FaEye />}</span>
+                  <span>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
                 </div>
               </div>
               <Link
