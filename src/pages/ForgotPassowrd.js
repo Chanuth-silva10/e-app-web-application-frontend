@@ -6,4 +6,4 @@ const ForgotPassowrd = () => {
   )
 }
 
-export default ForgotPassowrd;
+export default ForgotPassowrd
